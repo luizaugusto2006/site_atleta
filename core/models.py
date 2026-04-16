@@ -62,5 +62,6 @@ class HistoricoClube(models.Model):
         verbose_name_plural = "Histórico de Clubes"
         ordering = ['-ano_inicio']
 
+
     def __str__(self):
         return f"{self.nome_clube} ({self.ano_inicio})"
