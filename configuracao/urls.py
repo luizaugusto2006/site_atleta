@@ -1,16 +1,17 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, re_path # Adicionamos re_path aqui
 from core.views import home
-from django.conf import settings # Adicione esta linha
-from django.conf.urls.static import static # Adicione esta linha
+from django.conf import settings
+from django.conf.urls.static import static
+from django.views.static import serve # Importação essencial para produção
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name='home'),
 ]
 
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-else:
-    # ISSO É O QUE FALTA PARA A RENDER ACHAR AS FOTOS NO DEPLOY
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# Esta configuração abaixo substitui o seu IF/ELSE anterior
+# Ela funciona tanto no seu PC quanto na Render
+urlpatterns += [
+    re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
+]
