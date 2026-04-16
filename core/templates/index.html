@@ -24,16 +24,19 @@
         }
 
         .hero {
-            /* Camada escura para o texto não sumir + o caminho da sua imagem na pasta media */
-            background: linear-gradient(rgba(13, 27, 42, 0.75), rgba(13, 27, 42, 0.8)),
+            /* Camada escura para manter o texto visível */
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
                 url('/media/galeria/bg-grama.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
+
+            /* Aqui está o segredo para replicar a foto por toda a extensão */
+            background-repeat: repeat;
+            background-size: auto;
+            /* Mantém o tamanho original da foto para ela repetir sem distorcer */
+
             color: white;
-            padding: 100px 0;
+            padding: 80px 0;
             border-bottom: 5px solid #1b4332;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            text-align: center;
         }
 
         .ficha-tecnica {
@@ -63,10 +66,20 @@
 
 <body>
 
-    <header class="hero text-center">
+    <header class="hero">
         <div class="container">
-            <h1 class="display-3 fw-bold">{{ atleta.nome_artistico }}</h1>
-            <p class="lead">{{ atleta.get_posicao_display }}</p>
+            <div class="row align-items-center">
+                <div class="col-md-3 text-center mb-3 mb-md-0">
+                    <img src="{{ atleta.foto_perfil.url }}" alt="{{ atleta.nome_artistico }}"
+                        class="rounded-circle shadow-lg border border-white"
+                        style="width: 150px; height: 150px; object-fit: cover; border-width: 4px;">
+                </div>
+
+                <div class="col-md-9 text-center text-md-start">
+                    <h1 class="display-3 fw-bold m-0">{{ atleta.nome_artistico }}</h1>
+                    <p class="lead m-0" style="opacity: 0.9;">{{ atleta.get_posicao_display }}</p>
+                </div>
+            </div>
         </div>
     </header>
 

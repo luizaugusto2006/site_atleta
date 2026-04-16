@@ -12,6 +12,16 @@ class Atleta(models.Model):
     ]
 
     nome_artistico = models.CharField("Nome de Jogo", max_length=50)
+    
+    # NOVO CAMPO: Foto de Perfil (Rosto)
+    foto_perfil = models.ImageField(
+        "Foto de Perfil (Rosto)", 
+        upload_to="perfil/", 
+        null=True, 
+        blank=True,
+        help_text="Dê preferência a uma foto de rosto com fundo neutro"
+    )
+
     posicao = models.CharField("Posição", max_length=3, choices=POSICOES)
     data_nascimento = models.DateField("Data de Nascimento")
     altura = models.DecimalField("Altura (ex: 1.75)", max_digits=3, decimal_places=2)
@@ -32,7 +42,6 @@ class Atleta(models.Model):
     def __str__(self):
         return self.nome_artistico
 
-# A classe Foto agora está fora de Atleta (sem espaços no começo da linha)
 class Foto(models.Model):
     atleta = models.ForeignKey(Atleta, related_name="fotos", on_delete=models.CASCADE)
     imagem = models.ImageField("Foto de Ação", upload_to="galeria/")
@@ -51,7 +60,7 @@ class HistoricoClube(models.Model):
     class Meta:
         verbose_name = "Histórico de Clube"
         verbose_name_plural = "Histórico de Clubes"
-        ordering = ['-ano_inicio'] # Mostra o mais recente primeiro
+        ordering = ['-ano_inicio']
 
     def __str__(self):
         return f"{self.nome_clube} ({self.ano_inicio})"
