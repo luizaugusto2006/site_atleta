@@ -207,9 +207,17 @@
         <p>© 2026 - Perfil Oficial de Luiz Gabriel Paes do Nascimento</p>
     </footer>
     
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
-</body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox-plus-jquery.min.js"></script>
+
+    <script>
+        // Configuração extra para garantir que ele não encha a tela toda
+        lightbox.option({
+          'resizeDuration': 200,
+          'wrapAround': true,
+          'maxWidth': 800,
+          'maxHeight': 600
+        })
+    </script>
 </body>
 
 </html>
