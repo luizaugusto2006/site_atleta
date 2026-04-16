@@ -70,8 +70,8 @@
     <div class="container">
         <div class="row align-items-center">
             <div class="col-md-3 text-center mb-3 mb-md-0">
-                {% if atleta.foto_perfil %}
-                    <img src="{{ atleta.foto_perfil.url }}" alt="{{ atleta.nome_artistico }}"
+                {% if atleta.rosto %}
+                    <img src="{{ atleta.foto_rosto.url.url }}" alt="{{ atleta.nome_artistico }}"
                         class="rounded-circle shadow-lg border border-white"
                         style="width: 150px; height: 150px; object-fit: cover; border-width: 4px !important;">
                 {% else %}

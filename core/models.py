@@ -14,7 +14,7 @@ class Atleta(models.Model):
     nome_artistico = models.CharField("Nome de Jogo", max_length=50)
     
     # NOVO CAMPO: Foto de Perfil (Rosto)
-    foto_perfil = models.ImageField(
+    foto_rosto = models.ImageField(
         "Foto de Perfil (Rosto)", 
         upload_to="perfil/", 
         null=True, 
