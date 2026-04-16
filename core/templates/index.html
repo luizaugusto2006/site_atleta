@@ -10,15 +10,25 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet">
     <style>
         body {
-            background-color: #f0f2f5;
-            background-image: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('https://www.transparenttextures.com/patterns/pinstriped-suit.png');
+            background-color: #1b4332;
+            /* Um verde escuro de segurança */
+            background-image: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)),
+                url('https://www.transparenttextures.com/patterns/pinstriped-suit.png'),
+                url('https://images.unsplash.com/photo-1551701399-652390c6e6ec?q=80&w=2070&auto=format&fit=crop');
+            background-attachment: fixed;
+            background-size: cover;
         }
 
         .hero {
-            background: #0d1b2a;
+            /* Substituímos o fundo azul por uma imagem de grama com um filtro escuro por cima */
+            background: linear-gradient(rgba(13, 27, 42, 0.7), rgba(13, 27, 42, 0.7)),
+                url('https://images.unsplash.com/photo-1524495456230-016bc688bc4d?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
             color: white;
-            padding: 80px 0;
-            border-bottom: 5px solid #1b4332;
+            padding: 100px 0;
+            /* Aumentamos um pouco o respiro */
+            border-bottom: 5px solid #2d6a4f;
         }
 
         .ficha-tecnica {
@@ -206,16 +216,16 @@
     <footer class="text-center my-5 text-muted">
         <p>© 2026 - Perfil Oficial de Luiz Gabriel Paes do Nascimento</p>
     </footer>
-    
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox-plus-jquery.min.js"></script>
 
     <script>
         // Configuração extra para garantir que ele não encha a tela toda
         lightbox.option({
-          'resizeDuration': 200,
-          'wrapAround': true,
-          'maxWidth': 800,
-          'maxHeight': 600
+            'resizeDuration': 200,
+            'wrapAround': true,
+            'maxWidth': 800,
+            'maxHeight': 600
         })
     </script>
 </body>
