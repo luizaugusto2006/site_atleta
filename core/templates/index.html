@@ -76,8 +76,14 @@
             <div class="col-md-8">
                 <div class="ficha-tecnica shadow">
                     <div class="row text-center mb-4">
-                        <div class="col-4"><strong>Idade:</strong><br>{{ atleta.data_nascimento|timesince|default:"--"
-                            }}</div>
+                        <div class="col-4">
+                            <strong>Idade:</strong><br>
+                            {% if atleta.data_nascimento %}
+                            {{ atleta.data_nascimento|timesince|default:"--" }}
+                            {% else %}
+                            --
+                            {% endif %}
+                        </div>
                         <div class="col-4"><strong>Altura:</strong><br>{{ atleta.altura }}m</div>
                         <div class="col-4"><strong>Pé:</strong><br>{{ atleta.get_pe_dominante_display }}</div>
                     </div>
