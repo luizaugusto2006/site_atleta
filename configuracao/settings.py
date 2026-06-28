@@ -14,7 +14,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-*n3*gvw&u11e)a^9f&%5u
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
 # ALLOWED_HOSTS permite que o site rode no seu PC e nos domínios do servidor
-ALLOWED_HOSTS = ['*', 'luizatleta.pythonanywhere.com'] 
+ALLOWED_HOSTS = ['*', 'luizatleta.pythonanywhere.com', 'luizinho.pythonanywhere.com'] 
 
 # --- FIM DA SEGURANÇA ---
 
