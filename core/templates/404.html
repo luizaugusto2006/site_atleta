@@ -1,0 +1,158 @@
+{% load video_tags %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Página Não Encontrada</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2d1810;
+            --primary-light: #5c3a1e;
+            --accent: #c9a84c;
+            --accent-light: #d4b96a;
+            --dark: #0f0a06;
+            --text-light: #f5f0e8;
+            --text-muted: #9a8e7e;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--dark);
+            color: var(--text-light);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .bg-pattern {
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse at 20% 50%, rgba(45, 24, 16, 0.3) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 50%, rgba(201, 168, 76, 0.1) 0%, transparent 60%);
+        }
+
+        .grass-lines {
+            position: absolute;
+            inset: 0;
+            background-image:
+                repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(45, 80, 24, 0.05) 40px, rgba(45, 80, 24, 0.05) 41px),
+                repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(45, 80, 24, 0.05) 40px, rgba(45, 80, 24, 0.05) 41px);
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .ball-icon {
+            font-size: 8rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            animation: spin 4s linear infinite;
+            filter: drop-shadow(0 0 30px rgba(201, 168, 76, 0.4));
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.1); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        h1 {
+            font-size: 8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, var(--primary-light), var(--primary));
+            color: var(--text-light);
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-weight: 700;
+            text-decoration: none;
+            border: 2px solid var(--accent);
+            transition: all 0.3s ease;
+        }
+
+        .btn-home:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(201, 168, 76, 0.3);
+            color: var(--accent);
+        }
+
+        .field-lines {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 200px;
+            background: linear-gradient(0deg, rgba(45, 80, 24, 0.2) 0%, transparent 100%);
+            border-top: 2px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .field-center {
+            position: absolute;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 150px;
+            border: 2px solid rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-pattern"></div>
+    <div class="grass-lines"></div>
+
+    <div class="content">
+        <div class="ball-icon">
+            <i class="fa-solid fa-futbol"></i>
+        </div>
+        <h1>404</h1>
+        <h2>Bola pra fora!</h2>
+        <p>A página que você procura saiu do campo.</p>
+        <a href="/" class="btn-home">
+            <i class="fa-solid fa-home"></i> Voltar ao Início
+        </a>
+    </div>
+
+    <div class="field-lines">
+        <div class="field-center"></div>
+    </div>
+</body>
+</html>

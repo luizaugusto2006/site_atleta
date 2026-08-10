@@ -1,7 +1,6 @@
 from django.db import models
 
 class Atleta(models.Model):
-    # Opções para o campo de posição
     POSICOES = [
         ("ATA", "Atacante"),
         ("MEI", "Meio-Campo"),
@@ -12,16 +11,19 @@ class Atleta(models.Model):
     ]
 
     nome_artistico = models.CharField("Nome de Jogo", max_length=50)
-    
-    # NOVO CAMPO: Foto de Perfil (Rosto)
     foto_rosto = models.ImageField(
         "Foto de Perfil (Rosto)", 
         upload_to="perfil/", 
         null=True, 
-        blank=True,
-        help_text="Dê preferência a uma foto de rosto com fundo neutro"
+        blank=True
     )
-
+    foto_capa = models.ImageField(
+        "Foto de Capa (Hero)", 
+        upload_to="capa/", 
+        null=True, 
+        blank=True,
+        help_text="Foto de ação para o fundo do Hero (recomendado: 1920x1080)"
+    )
     posicao = models.CharField("Posição", max_length=3, choices=POSICOES)
     data_nascimento = models.DateField("Data de Nascimento")
     altura = models.DecimalField("Altura (ex: 1.75)", max_digits=3, decimal_places=2)
@@ -33,7 +35,13 @@ class Atleta(models.Model):
     whatsapp = models.CharField(
         "WhatsApp (com DDD)", max_length=20, help_text="Ex: 21970088404"
     )
-    
+    sobre_mim = models.TextField(
+        "Sobre Mim", 
+        blank=True, 
+        default="Meio-campista ambidestro clássico com excelente leitura de jogo e capacidade de organização.",
+        help_text="Texto pessoal que aparece na seção 'Sobre Mim'"
+    )
+
     # Habilidades
     visao_jogo = models.IntegerField("Visão de Jogo (0-100)", default=80)
     precisao_passe = models.IntegerField("Precisão de Passe (0-100)", default=80)
@@ -49,6 +57,32 @@ class Atleta(models.Model):
     def __str__(self):
         return self.nome_artistico
 
+
+class Estatistica(models.Model):
+    TEMPORADAS = [
+        ("2024", "2024"),
+        ("2025", "2025"),
+        ("2026", "2026"),
+    ]
+    
+    atleta = models.ForeignKey(Atleta, related_name="estatisticas", on_delete=models.CASCADE)
+    temporada = models.CharField("Temporada", max_length=4, choices=TEMPORADAS, default="2025")
+    gols = models.IntegerField("Gols", default=0)
+    assistencias = models.IntegerField("Assistências", default=0)
+    jogos = models.IntegerField("Jogos", default=0)
+    minutos = models.IntegerField("Minutos em Campo", default=0)
+    cartoes_amarelos = models.IntegerField("Cartões Amarelos", default=0)
+    cartoes_vermelhos = models.IntegerField("Cartões Vermelhos", default=0)
+
+    class Meta:
+        verbose_name = "Estatística"
+        verbose_name_plural = "Estatísticas"
+        ordering = ['-temporada']
+
+    def __str__(self):
+        return f"{self.atleta.nome_artistico} - {self.temporada}"
+
+
 class Foto(models.Model):
     atleta = models.ForeignKey(Atleta, related_name="fotos", on_delete=models.CASCADE)
     imagem = models.ImageField("Foto de Ação", upload_to="galeria/")
@@ -56,7 +90,8 @@ class Foto(models.Model):
 
     def __str__(self):
         return f"Foto de {self.atleta.nome_artistico} - {self.id}"
-    
+
+
 class HistoricoClube(models.Model):
     atleta = models.ForeignKey(Atleta, related_name="clubes", on_delete=models.CASCADE)
     nome_clube = models.CharField("Nome do Clube", max_length=100)
@@ -69,6 +104,20 @@ class HistoricoClube(models.Model):
         verbose_name_plural = "Histórico de Clubes"
         ordering = ['-ano_inicio']
 
-
     def __str__(self):
         return f"{self.nome_clube} ({self.ano_inicio})"
+
+
+class Depoimento(models.Model):
+    atleta = models.ForeignKey(Atleta, related_name="depoimentos", on_delete=models.CASCADE)
+    autor = models.CharField("Nome do Autor", max_length=100)
+    cargo = models.CharField("Cargo/Função", max_length=100, blank=True, help_text="Ex: Treinador, Companheiro de Time")
+    texto = models.TextField("Depoimento")
+    foto = models.ImageField("Foto do Autor", upload_to="depoimentos/", null=True, blank=True)
+
+    class Meta:
+        verbose_name = "Depoimento"
+        verbose_name_plural = "Depoimentos"
+
+    def __str__(self):
+        return f"{self.autor} sobre {self.atleta.nome_artistico}"

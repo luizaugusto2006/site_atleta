@@ -1,37 +1,26 @@
 {% load video_tags %}
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ atleta.nome_artistico }} - Atleta de Futebol</title>
-    <meta name="description" content="Perfil oficial de {{ atleta.nome_artistico }} - {{ atleta.get_posicao_display }}. Conheça a trajetória, estatísticas e galeria do atleta.">
-    <meta property="og:title" content="{{ atleta.nome_artistico }} - Atleta de Futebol">
-    <meta property="og:description" content="Perfil oficial - {{ atleta.get_posicao_display }}">
-    <meta property="og:type" content="website">
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
-
+    <title>{{ atleta.nome_artistico }} | Atleta Profissional</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #1a5c2e;
-            --primary-dark: #0d3b1e;
-            --primary-light: #2d8a4e;
-            --accent: #f7c948;
-            --accent-hover: #e0b234;
-            --dark: #0a0f0d;
-            --dark-card: #111a15;
-            --text-light: #f0f9f4;
-            --text-muted: #8a9b92;
-            --gradient-hero: linear-gradient(135deg, #0d3b1e 0%, #1a5c2e 50%, #0d3b1e 100%);
-            --gradient-card: linear-gradient(145deg, #111a15, #1a2f20);
-            --shadow-soft: 0 8px 32px rgba(0, 0, 0, 0.3);
-            --shadow-glow: 0 0 30px rgba(26, 92, 46, 0.3);
+            --primary: #2d1810;
+            --accent: #c9a84c;
+            --grass: #1a3a1a;
+            --grass-light: #2d5a2d;
+            --dark: #0f0a06;
+            --dark-card: #1a120a;
+            --text-light: #f5f0e8;
+            --text-muted: #9a8e7e;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -43,571 +32,892 @@
             overflow-x: hidden;
         }
 
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: var(--dark); }
-        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--primary-light); }
-
-        /* ===== HERO SECTION ===== */
-        .hero {
-            position: relative;
-            min-height: 100vh;
-            background: var(--gradient-hero);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background:
-                radial-gradient(ellipse at 20% 50%, rgba(45, 138, 78, 0.2) 0%, transparent 60%),
-                radial-gradient(ellipse at 80% 50%, rgba(247, 201, 72, 0.08) 0%, transparent 60%);
-            z-index: 0;
-        }
-
-        .hero-pattern {
-            position: absolute;
-            inset: 0;
-            background-image:
-                repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(255,255,255,0.02) 40px, rgba(255,255,255,0.02) 41px),
-                repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(255,255,255,0.02) 40px, rgba(255,255,255,0.02) 41px);
-            z-index: 0;
-        }
-
-        .hero-badge {
-            display: inline-block;
-            background: rgba(247, 201, 72, 0.15);
-            border: 1px solid rgba(247, 201, 72, 0.3);
-            color: var(--accent);
-            padding: 6px 20px;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 1.5rem;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-            text-align: center;
-            padding: 2rem;
-        }
-
-        .hero-photo-wrapper {
-            position: relative;
-            display: inline-block;
-            margin-bottom: 2rem;
-        }
-
-        .hero-photo-wrapper::after {
-            content: '';
-            position: absolute;
-            inset: -4px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--accent), var(--primary-light));
-            z-index: -1;
-            animation: spin 4s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .hero-photo {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            object-fit: cover;
-            object-position: center 10%;
-            border: 4px solid var(--dark);
-            box-shadow: var(--shadow-soft);
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 0.5rem;
-        }
-
-        .hero .position-tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(255,255,255,0.08);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.15);
-            padding: 8px 24px;
-            border-radius: 50px;
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--text-light);
-            margin-bottom: 2rem;
-        }
-
-        .hero-stats-row {
-            display: flex;
-            justify-content: center;
-            gap: 3rem;
-            flex-wrap: wrap;
-        }
-
-        .hero-stat-item {
-            text-align: center;
-        }
-
-        .hero-stat-item .number {
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: var(--accent);
-        }
-
-        .hero-stat-item .label {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--text-muted);
-        }
-
-        .scroll-indicator {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 1;
-            color: var(--text-muted);
-            font-size: 1.5rem;
-            animation: bounce 2s infinite;
-            cursor: pointer;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateX(-50%) translateY(0); }
-            50% { transform: translateX(-50%) translateY(10px); }
-        }
-
-        /* ===== SECTION TITLES ===== */
-        .section-title {
-            font-size: 2rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 0.5rem;
-            position: relative;
-            display: inline-block;
-        }
-
-        .section-title span {
-            background: linear-gradient(135deg, var(--primary-light), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .section-subtitle {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-bottom: 3rem;
-        }
-
-        .section-divider {
-            width: 60px;
-            height: 3px;
-            background: linear-gradient(90deg, var(--primary-light), var(--accent));
-            border-radius: 2px;
-            margin: 0 auto 1rem;
-        }
-
-        /* ===== CARDS ===== */
-        .glass-card {
-            background: var(--gradient-card);
-            border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 20px;
-            padding: 2rem;
-            box-shadow: var(--shadow-soft);
-            backdrop-filter: blur(10px);
-            transition: all 0.4s ease;
-        }
-
-        .glass-card:hover {
-            border-color: rgba(45, 138, 78, 0.3);
-            box-shadow: var(--shadow-glow);
-            transform: translateY(-4px);
-        }
-
-        /* ===== FICHA TÉCNICA ===== */
-        .ficha-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        .ficha-item {
-            text-align: center;
-            padding: 1.2rem 0.8rem;
-            background: rgba(255,255,255,0.03);
-            border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.05);
-            transition: all 0.3s ease;
-        }
-
-        .ficha-item:hover {
-            background: rgba(255,255,255,0.06);
-            border-color: rgba(45, 138, 78, 0.2);
-        }
-
-        .ficha-item .icon {
-            font-size: 1.5rem;
-            color: var(--accent);
-            margin-bottom: 0.5rem;
-        }
-
-        .ficha-item .value {
-            font-size: 1.2rem;
-            font-weight: 700;
-        }
-
-        .ficha-item .label {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--text-muted);
-        }
-
-        /* ===== SKILL BARS ===== */
-        .skill-item {
-            margin-bottom: 1.2rem;
-        }
-
-        .skill-info {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.4rem;
-            font-size: 0.9rem;
-        }
-
-        .skill-info .name { font-weight: 600; }
-        .skill-info .pct { color: var(--accent); font-weight: 700; }
-
-        .skill-bar {
-            height: 8px;
-            background: rgba(255,255,255,0.08);
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        .skill-bar-fill {
-            height: 100%;
-            border-radius: 10px;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-            width: 0;
-            transition: width 1.5s ease;
-        }
-
-        /* ===== QUOTE ===== */
-        .quote-box {
-            position: relative;
-            padding: 2rem;
-            text-align: center;
-            background: rgba(247, 201, 72, 0.05);
-            border: 1px solid rgba(247, 201, 72, 0.1);
-            border-radius: 16px;
-            margin: 2rem 0;
-        }
-
-        .quote-box i {
-            font-size: 2rem;
-            color: var(--accent);
-            opacity: 0.5;
-            margin-bottom: 1rem;
-        }
-
-        .quote-box p {
-            font-size: 1.1rem;
-            font-style: italic;
-            color: var(--text-light);
-            opacity: 0.9;
-            margin: 0;
-        }
-
-        /* ===== TIMELINE ===== */
-        .timeline {
-            position: relative;
-            padding-left: 2rem;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 7px;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: linear-gradient(180deg, var(--primary-light), var(--accent));
-        }
-
-        .timeline-item {
-            position: relative;
-            margin-bottom: 2rem;
-            padding-left: 1.5rem;
-        }
-
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -1.65rem;
-            top: 6px;
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background: var(--primary-light);
-            border: 3px solid var(--dark-card);
-            box-shadow: 0 0 0 2px var(--primary-light);
-        }
-
-        .timeline-item .year {
-            font-size: 0.8rem;
-            color: var(--accent);
-            font-weight: 700;
-            letter-spacing: 1px;
-        }
-
-        .timeline-item .club-name {
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 0.2rem;
-        }
-
-        .timeline-item .achievement {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        /* ===== GALERIA ===== */
-        .gallery-item {
-            position: relative;
-            border-radius: 12px;
-            overflow: hidden;
-            cursor: pointer;
-            aspect-ratio: 4/3;
-        }
-
-        .gallery-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.6s ease;
-        }
-
-        .gallery-item:hover img {
-            transform: scale(1.1);
-        }
-
-        .gallery-item .overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(0deg, rgba(0,0,0,0.6) 0%, transparent 50%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            display: flex;
-            align-items: flex-end;
-            padding: 1rem;
-        }
-
-        .gallery-item:hover .overlay {
-            opacity: 1;
-        }
-
-        .gallery-item .overlay span {
-            color: white;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
-        /* ===== VIDEO ===== */
-        .video-wrapper {
-            border-radius: 16px;
-            overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.06);
-            box-shadow: var(--shadow-soft);
-        }
-
-        /* ===== CONTACT BUTTONS ===== */
-        .btn-instagram {
-            background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
-            color: white;
-            border: none;
-            padding: 14px 32px;
-            border-radius: 50px;
-            font-weight: 700;
-            transition: all 0.3s ease;
-        }
-
-        .btn-instagram:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(220, 39, 67, 0.4);
-            color: white;
-        }
-
-        .btn-whatsapp {
-            background: linear-gradient(135deg, #25d366, #128c7e);
-            color: white;
-            border: none;
-            padding: 14px 32px;
-            border-radius: 50px;
-            font-weight: 700;
-            transition: all 0.3s ease;
-        }
-
-        .btn-whatsapp:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4);
-            color: white;
-        }
-
-        .btn-outline-light-custom {
-            background: transparent;
-            border: 2px solid rgba(255,255,255,0.2);
-            color: var(--text-light);
-            padding: 14px 32px;
-            border-radius: 50px;
-            font-weight: 700;
-            transition: all 0.3s ease;
-        }
-
-        .btn-outline-light-custom:hover {
-            border-color: var(--accent);
-            color: var(--accent);
-            transform: translateY(-3px);
-        }
-
-        /* ===== FOOTER ===== */
-        .footer {
-            border-top: 1px solid rgba(255,255,255,0.06);
-            padding: 2rem 0;
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-        }
-
-        .footer .brand {
-            color: var(--accent);
-            font-weight: 700;
-        }
-
-        /* ===== FLOATING SOCIAL ===== */
-        .float-social {
+        /* Theme Toggle */
+        .theme-toggle {
             position: fixed;
-            bottom: 24px;
-            right: 24px;
-            z-index: 999;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .float-social a {
-            width: 52px;
-            height: 52px;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.4rem;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+            background: var(--accent);
+            color: var(--primary);
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(201, 168, 76, 0.4);
             transition: all 0.3s ease;
         }
 
-        .float-social .float-wpp {
-            background: linear-gradient(135deg, #25d366, #128c7e);
+        .theme-toggle:hover { transform: scale(1.1); }
+
+        body.light-theme {
+            --dark: #f5f0e8;
+            --dark-card: #ffffff;
+            --text-light: #1a1a1a;
+            --text-muted: #666;
         }
 
-        .float-social .float-ig {
-            background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+        body.light-theme .navbar { background: rgba(255, 255, 255, 0.95) !important; }
+        body.light-theme .navbar .nav-link { color: #333 !important; }
+        body.light-theme .hero-overlay { background: linear-gradient(135deg, rgba(255,255,255,0.85), rgba(255,255,255,0.6)) !important; }
+        body.light-theme .hero-name { color: var(--primary) !important; }
+        body.light-theme .card-custom { background: #fff; color: #333; border-color: #eee; }
+        body.light-theme .card-custom .text-muted-custom { color: #888; }
+
+        /* Navbar */
+        .navbar {
+            background: rgba(15, 10, 6, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 12px 0;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(201, 168, 76, 0.1);
         }
 
-        .float-social a:hover {
-            transform: scale(1.1) translateY(-3px);
+        .navbar.scrolled {
+            padding: 8px 0;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
         }
 
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2.2rem; letter-spacing: 1px; }
-            .hero-photo { width: 140px; height: 140px; }
-            .hero-stats-row { gap: 1.5rem; }
-            .section-title { font-size: 1.5rem; }
-            .glass-card { padding: 1.5rem; }
-            .ficha-grid { grid-template-columns: repeat(2, 1fr); }
-            .float-social { bottom: 16px; right: 16px; }
-            .float-social a { width: 44px; height: 44px; font-size: 1.2rem; }
-        }
-
-        @media (max-width: 480px) {
-            .hero h1 { font-size: 1.8rem; }
-            .hero-stat-item .number { font-size: 1.3rem; }
+        .navbar-brand {
+            font-weight: 800;
+            font-size: 1.3rem;
+            color: var(--accent) !important;
+            letter-spacing: 1px;
         }
 
         .nav-link {
-            color: var(--text-light) !important;
-            font-size: 0.85rem;
+            color: var(--text-muted) !important;
             font-weight: 500;
-            padding: 0.5rem 1rem !important;
-            transition: color 0.3s ease;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 8px 14px !important;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
         }
 
         .nav-link:hover, .nav-link.active {
             color: var(--accent) !important;
         }
 
-        .navbar.scrolled {
-            background: rgba(10, 15, 13, 0.95) !important;
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 60%;
         }
 
-        /* ===== PARTICLES / SPARKLE ===== */
-        .sparkle {
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .hero-capa {
             position: absolute;
-            width: 4px;
-            height: 4px;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            animation: heroZoom 20s ease-in-out infinite alternate;
+        }
+
+        @keyframes heroZoom {
+            from { transform: scale(1); }
+            to { transform: scale(1.1); }
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(15, 10, 6, 0.9), rgba(26, 58, 26, 0.8));
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 120px 20px 80px;
+        }
+
+        .hero-photo-wrapper {
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .hero-photo {
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--accent);
+            box-shadow: 0 0 40px rgba(201, 168, 76, 0.3);
+            animation: photoFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes photoFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .hero-photo-ring {
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border: 2px solid rgba(201, 168, 76, 0.3);
+            border-radius: 50%;
+            animation: ringPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes ringPulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.5; }
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--grass), var(--grass-light));
+            color: var(--accent);
+            padding: 6px 20px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(201, 168, 76, 0.3);
+        }
+
+        .hero-name {
+            font-size: 3.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--accent), #e8d48b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.1;
+            margin-bottom: 10px;
+        }
+
+        .hero-position {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            font-weight: 400;
+            margin-bottom: 25px;
+        }
+
+        /* Countdown */
+        .countdown-container {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .countdown-item {
+            text-align: center;
+            background: rgba(201, 168, 76, 0.1);
+            border: 1px solid rgba(201, 168, 76, 0.2);
+            border-radius: 12px;
+            padding: 12px 16px;
+            min-width: 70px;
+        }
+
+        .countdown-number {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--accent);
+            display: block;
+            line-height: 1;
+        }
+
+        .countdown-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 30px;
+        }
+
+        .hero-stat {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .hero-stat i {
+            color: var(--accent);
+            font-size: 1.1rem;
+        }
+
+        .hero-stat-text {
+            font-size: 0.8rem;
+        }
+
+        .hero-stat-label {
+            color: var(--text-muted);
+            font-size: 0.65rem;
+            text-transform: uppercase;
+        }
+
+        .hero-stat-value {
+            font-weight: 600;
+        }
+
+        /* Sections */
+        section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--text-light);
+            margin-bottom: 10px;
+        }
+
+        .section-title .accent-line {
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--grass-light));
+            margin: 0 auto 15px;
+            border-radius: 2px;
+        }
+
+        .section-title p {
+            color: var(--text-muted);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* About */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .about-text {
+            color: var(--text-light);
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+
+        .about-text p {
+            margin-bottom: 20px;
+        }
+
+        .ficha-tecnica {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .ficha-item {
+            background: var(--dark-card);
+            border: 1px solid rgba(201, 168, 76, 0.1);
+            border-radius: 10px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .ficha-item i {
+            color: var(--accent);
+            font-size: 1.1rem;
+        }
+
+        .ficha-item .label {
+            color: var(--text-muted);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .ficha-item .value {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* Mini Field */
+        .field-container {
+            position: relative;
+            width: 100%;
+            max-width: 320px;
+            aspect-ratio: 1.5 / 1;
+            background: linear-gradient(135deg, var(--grass), var(--grass-light));
+            border-radius: 12px;
+            border: 2px solid rgba(201, 168, 76, 0.3);
+            overflow: hidden;
+            margin: 20px auto;
+        }
+
+        .field-container .field-center-line {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-50%);
+        }
+
+        .field-container .field-center-circle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 60px;
+            height: 60px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .field-container .field-horizontal-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateX(-50%);
+        }
+
+        .field-container .penalty-box-top {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40%;
+            height: 20%;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top: none;
+        }
+
+        .field-container .penalty-box-bottom {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40%;
+            height: 20%;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-bottom: none;
+        }
+
+        .field-container .player-dot {
+            position: absolute;
+            width: 18px;
+            height: 18px;
             background: var(--accent);
             border-radius: 50%;
-            opacity: 0;
-            pointer-events: none;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 15px rgba(201, 168, 76, 0.6);
+            animation: playerPulse 2s ease-in-out infinite;
+            z-index: 2;
         }
+
+        .field-container .player-dot::after {
+            content: '';
+            position: absolute;
+            top: -6px;
+            left: -6px;
+            right: -6px;
+            bottom: -6px;
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+            animation: dotRing 2s ease-in-out infinite;
+        }
+
+        @keyframes playerPulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.15); }
+        }
+
+        @keyframes dotRing {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(1.3); }
+        }
+
+        .field-container .player-label {
+            position: absolute;
+            transform: translateX(-50%);
+            color: var(--accent);
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            white-space: nowrap;
+        }
+
+        /* Stats Counter */
+        .stats-section {
+            background: linear-gradient(135deg, var(--grass), var(--grass-light));
+            border-top: 2px solid var(--accent);
+            border-bottom: 2px solid var(--accent);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 30px 20px;
+            background: rgba(15, 10, 6, 0.4);
+            border-radius: 16px;
+            border: 1px solid rgba(201, 168, 76, 0.2);
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--accent);
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            margin-top: 8px;
+        }
+
+        .stat-temporada {
+            display: inline-block;
+            background: rgba(201, 168, 76, 0.15);
+            color: var(--accent);
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.65rem;
+            margin-top: 8px;
+            border: 1px solid rgba(201, 168, 76, 0.3);
+        }
+
+        /* Skills */
+        .skills-category {
+            margin-bottom: 40px;
+        }
+
+        .skill-category-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .skill-category-title i {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--grass), var(--grass-light));
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .skill-item {
+            margin-bottom: 18px;
+        }
+
+        .skill-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
+        }
+
+        .skill-name {
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .skill-value {
+            font-size: 0.85rem;
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .skill-bar {
+            height: 8px;
+            background: rgba(201, 168, 76, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .skill-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--grass-light), var(--accent));
+            border-radius: 4px;
+            width: 0;
+            transition: width 1.5s ease-out;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            padding-left: 40px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, var(--accent), var(--grass-light));
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+            padding: 20px 24px;
+            background: var(--dark-card);
+            border-radius: 12px;
+            border: 1px solid rgba(201, 168, 76, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        .timeline-item:hover {
+            border-color: var(--accent);
+            transform: translateX(5px);
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -33px;
+            top: 25px;
+            width: 14px;
+            height: 14px;
+            background: var(--accent);
+            border-radius: 50%;
+            border: 3px solid var(--dark);
+            box-shadow: 0 0 10px rgba(201, 168, 76, 0.4);
+        }
+
+        .timeline-year {
+            font-size: 0.75rem;
+            color: var(--accent);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .timeline-clube {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin: 5px 0;
+        }
+
+        .timeline-desc {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* Video */
+        .video-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 2px solid rgba(201, 168, 76, 0.3);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .video-wrapper iframe {
+            width: 100%;
+            aspect-ratio: 16/9;
+            border: none;
+        }
+
+        /* Gallery */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            aspect-ratio: 4/3;
+            border: 2px solid rgba(201, 168, 76, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            border-color: var(--accent);
+            transform: scale(1.02);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 50%, rgba(15, 10, 6, 0.8));
+            opacity: 0;
+            transition: opacity 0.3s;
+            display: flex;
+            align-items: flex-end;
+            padding: 15px;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .gallery-overlay i {
+            color: var(--accent);
+            font-size: 1.5rem;
+        }
+
+        /* Testimonials */
+        .testimonial-card {
+            background: var(--dark-card);
+            border: 1px solid rgba(201, 168, 76, 0.1);
+            border-radius: 16px;
+            padding: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .testimonial-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+        }
+
+        .testimonial-quote {
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+
+        .testimonial-author {
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .testimonial-role {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Contact */
+        .contact-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .btn-instagram {
+            background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            color: #fff;
+        }
+
+        .btn-whatsapp {
+            background: #25d366;
+            color: #fff;
+        }
+
+        .btn-share {
+            background: var(--accent);
+            color: var(--primary);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-topo {
+            background: transparent;
+            color: var(--accent);
+            border: 2px solid var(--accent);
+            cursor: pointer;
+        }
+
+        .contact-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(201, 168, 76, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary);
+            text-align: center;
+            padding: 30px 0;
+            border-top: 1px solid rgba(201, 168, 76, 0.2);
+        }
+
+        footer p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        footer .accent {
+            color: var(--accent);
+        }
+
+        /* Card Custom */
+        .card-custom {
+            background: var(--dark-card);
+            border: 1px solid rgba(201, 168, 76, 0.1);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .card-custom:hover {
+            border-color: var(--accent);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 100px;
+                gap: 30px;
+            }
+
+            .hero-photo { width: 180px; height: 180px; }
+            .hero-name { font-size: 2.2rem; }
+            .countdown-container { justify-content: center; }
+            .hero-stats { justify-content: center; flex-wrap: wrap; }
+            .about-grid { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+            .section-title h2 { font-size: 1.8rem; }
+            .navbar-brand { font-size: 1rem; }
+            .nav-link { font-size: 0.7rem; padding: 6px 8px !important; }
+            .contact-buttons { flex-direction: column; align-items: center; }
+            .contact-btn { width: 100%; max-width: 280px; justify-content: center; }
+        }
+
+        @media (max-width: 480px) {
+            .hero-name { font-size: 1.8rem; }
+            .hero-photo { width: 140px; height: 140px; }
+            .countdown-item { min-width: 55px; padding: 8px 10px; }
+            .countdown-number { font-size: 1.3rem; }
+            .stats-grid { grid-template-columns: 1fr 1fr; gap: 15px; }
+            .stat-number { font-size: 2rem; }
+            .gallery-grid { grid-template-columns: 1fr; }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--dark); }
+        ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 4px; }
     </style>
 </head>
 <body>
 
-    <!-- ===== NAVBAR ===== -->
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav" style="background: rgba(10, 15, 13, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.06); transition: all 0.3s ease;">
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" id="themeToggle" title="Alternar tema">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top" id="mainNav">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="#home" style="color: var(--accent); font-size: 1.2rem;">
-                <i class="fa-solid fa-futbol me-2"></i>{{ atleta.nome_artistico }}
-            </a>
+            <a class="navbar-brand" href="#inicio">{{ atleta.nome_artistico }}</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
+                <i class="fas fa-bars" style="color: var(--accent);"></i>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="#home">Início</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#sobre">Ficha Técnica</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#inicio">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#sobre">Sobre</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#numeros">Numeros</a></li>
                     <li class="nav-item"><a class="nav-link" href="#habilidades">Habilidades</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#trajetoria">Trajetória</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#video">Vídeo</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#trajetoria">Trajetoria</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#video">Video</a></li>
                     <li class="nav-item"><a class="nav-link" href="#galeria">Galeria</a></li>
                     <li class="nav-item"><a class="nav-link" href="#contato">Contato</a></li>
                 </ul>
@@ -615,208 +925,61 @@
         </div>
     </nav>
 
-    <!-- ===== HERO ===== -->
-    <section class="hero" id="home">
-        <div class="hero-pattern"></div>
-
-        <div class="hero-content" data-aos="fade-up" data-aos-duration="1000">
-            {% if atleta.foto_rosto %}
-            <div class="hero-photo-wrapper">
+    <!-- Hero -->
+    <section class="hero" id="inicio">
+        <div class="hero-capa"{% if atleta.foto_capa %} style="background-image: url('{{ atleta.foto_capa.url }}');"{% endif %}></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="hero-photo-wrapper" data-aos="fade-right" data-aos-delay="200">
+                {% if atleta.foto_rosto %}
                 <img src="{{ atleta.foto_rosto.url }}" alt="{{ atleta.nome_artistico }}" class="hero-photo">
+                <div class="hero-photo-ring"></div>
+                {% endif %}
             </div>
-            {% endif %}
+            <div data-aos="fade-left" data-aos-delay="400">
+                <span class="hero-badge">{{ atleta.get_posicao_display }}</span>
+                <h1 class="hero-name">{{ atleta.nome_artistico }}</h1>
+                <p class="hero-position">{{ atleta.get_posicao_display }} &bull; {{ atleta.get_pe_dominante_display }}</p>
 
-            <div class="hero-badge">Atleta de Futebol</div>
-            <h1>{{ atleta.nome_artistico }}</h1>
-
-            <div class="position-tag">
-                <i class="fa-solid fa-futbol"></i>
-                {{ atleta.get_posicao_display }}
-                <i class="fa-solid fa-futbol"></i>
-            </div>
-
-            <div class="hero-stats-row">
-                <div class="hero-stat-item">
-                    <div class="number">{{ atleta.altura }}m</div>
-                    <div class="label">Altura</div>
+                <div class="countdown-container" id="countdown">
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="cd-years">--</span>
+                        <span class="countdown-label">Anos</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="cd-months">--</span>
+                        <span class="countdown-label">Meses</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="cd-days">--</span>
+                        <span class="countdown-label">Dias</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="cd-hours">--</span>
+                        <span class="countdown-label">Horas</span>
+                    </div>
                 </div>
-                <div class="hero-stat-item">
-                    <div class="number">{{ atleta.get_pe_dominante_display }}</div>
-                    <div class="label">Pé Dominante</div>
-                </div>
-                <div class="hero-stat-item">
-                    <div class="number">{{ atleta.data_nascimento|date:"Y" }}</div>
-                    <div class="label">Nascimento</div>
-                </div>
-            </div>
-        </div>
 
-        <div class="scroll-indicator">
-            <i class="fa-solid fa-chevron-down"></i>
-        </div>
-    </section>
-
-    <!-- ===== FICHA TÉCNICA ===== -->
-    <section class="py-5" id="sobre" style="padding-top: 80px !important;">
-        <div class="container py-5">
-            <div class="text-center mb-5" data-aos="fade-up">
-                <div class="section-divider"></div>
-                <h2 class="section-title">Ficha <span>Técnica</span></h2>
-                <p class="section-subtitle">Conheça o perfil completo do atleta</p>
-            </div>
-
-            <div class="row justify-content-center">
-                <div class="col-lg-10">
-                    <div class="glass-card" data-aos="fade-up" data-aos-delay="100">
-                        <div class="ficha-grid">
-                            <div class="ficha-item">
-                                <div class="icon"><i class="fa-solid fa-cake-candles"></i></div>
-                                <div class="value">{{ atleta.data_nascimento|date:"d/m/Y" }}</div>
-                                <div class="label">Data de Nascimento</div>
-                            </div>
-                            <div class="ficha-item">
-                                <div class="icon"><i class="fa-solid fa-ruler-vertical"></i></div>
-                                <div class="value">{{ atleta.altura }}m</div>
-                                <div class="label">Altura</div>
-                            </div>
-                            <div class="ficha-item">
-                                <div class="icon"><i class="fa-solid fa-shoe-prints"></i></div>
-                                <div class="value">{{ atleta.get_pe_dominante_display }}</div>
-                                <div class="label">Pé Dominante</div>
-                            </div>
-                            <div class="ficha-item">
-                                <div class="icon"><i class="fa-solid fa-shirt"></i></div>
-                                <div class="value">{{ atleta.get_posicao_display }}</div>
-                                <div class="label">Posição</div>
-                            </div>
-                            <div class="ficha-item">
-                                <div class="icon"><i class="fa-solid fa-calendar-days"></i></div>
-                                <div class="value">{{ atleta.data_nascimento|timesince|default:"--" }}</div>
-                                <div class="label">Idade</div>
-                            </div>
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <i class="fas fa-ruler-vertical"></i>
+                        <div class="hero-stat-text">
+                            <div class="hero-stat-value">{{ atleta.altura }}</div>
+                            <div class="hero-stat-label">Altura</div>
                         </div>
-
-                        <div class="quote-box" data-aos="fade-up">
-                            <i class="fa-solid fa-quote-left"></i>
-                            <p>Meio-campista ambidestro clássico com excelente leitura de jogo e capacidade de organização. Destaque na transição ofensiva e bolas paradas e apelidado de pitbull na marcação.</p>
+                    </div>
+                    <div class="hero-stat">
+                        <i class="fas fa-shoe-prints"></i>
+                        <div class="hero-stat-text">
+                            <div class="hero-stat-value">{{ atleta.get_pe_dominante_display }}</div>
+                            <div class="hero-stat-label">Pe Dominante</div>
                         </div>
-
-                        <h5 class="fw-bold mb-4" data-aos="fade-up">
-                            <i class="fa-solid fa-chart-simple me-2" style="color: var(--accent);"></i>
-                            Habilidades Técnicas
-                        </h5>
-
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="skill-item" data-aos="fade-up">
-                                    <div class="skill-info">
-                                        <span class="name">Visão de Jogo</span>
-                                        <span class="pct">{{ atleta.visao_jogo }}%</span>
-                                    </div>
-                                    <div class="skill-bar">
-                                        <div class="skill-bar-fill" data-width="{{ atleta.visao_jogo }}"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="skill-item" data-aos="fade-up" data-aos-delay="100">
-                                    <div class="skill-info">
-                                        <span class="name">Precisão de Passe</span>
-                                        <span class="pct">{{ atleta.precisao_passe }}%</span>
-                                    </div>
-                                    <div class="skill-bar">
-                                        <div class="skill-bar-fill" data-width="{{ atleta.precisao_passe }}"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="skill-item" data-aos="fade-up" data-aos-delay="200">
-                                    <div class="skill-info">
-                                        <span class="name">Controle de Bola</span>
-                                        <span class="pct">{{ atleta.controle_bola }}%</span>
-                                    </div>
-                                    <div class="skill-bar">
-                                        <div class="skill-bar-fill" data-width="{{ atleta.controle_bola }}"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="skill-item" data-aos="fade-up" data-aos-delay="300">
-                                    <div class="skill-info">
-                                        <span class="name">Velocidade</span>
-                                        <span class="pct">{{ atleta.velocidade }}%</span>
-                                    </div>
-                                    <div class="skill-bar">
-                                        <div class="skill-bar-fill" data-width="{{ atleta.velocidade }}"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="skill-item" data-aos="fade-up" data-aos-delay="400">
-                                    <div class="skill-info">
-                                        <span class="name">Dribles</span>
-                                        <span class="pct">{{ atleta.dribles }}%</span>
-                                    </div>
-                                    <div class="skill-bar">
-                                        <div class="skill-bar-fill" data-width="{{ atleta.dribles }}"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="skill-item" data-aos="fade-up" data-aos-delay="500">
-                                    <div class="skill-info">
-                                        <span class="name">Finalização</span>
-                                        <span class="pct">{{ atleta.finalizacao }}%</span>
-                                    </div>
-                                    <div class="skill-bar">
-                                        <div class="skill-bar-fill" data-width="{{ atleta.finalizacao }}"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="skill-item" data-aos="fade-up" data-aos-delay="600">
-                                    <div class="skill-info">
-                                        <span class="name">Defesa</span>
-                                        <span class="pct">{{ atleta.defesa }}%</span>
-                                    </div>
-                                    <div class="skill-bar">
-                                        <div class="skill-bar-fill" data-width="{{ atleta.defesa }}"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="skill-item" data-aos="fade-up" data-aos-delay="700">
-                                    <div class="skill-info">
-                                        <span class="name">Físico</span>
-                                        <span class="pct">{{ atleta.fisico }}%</span>
-                                    </div>
-                                    <div class="skill-bar">
-                                        <div class="skill-bar-fill" data-width="{{ atleta.fisico }}"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="skill-item" data-aos="fade-up" data-aos-delay="800">
-                                    <div class="skill-info">
-                                        <span class="name">Disputa Aérea</span>
-                                        <span class="pct">{{ atleta.disputa_aerea }}%</span>
-                                    </div>
-                                    <div class="skill-bar">
-                                        <div class="skill-bar-fill" data-width="{{ atleta.disputa_aerea }}"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="skill-item" data-aos="fade-up" data-aos-delay="900">
-                                    <div class="skill-info">
-                                        <span class="name">Cavarinha</span>
-                                        <span class="pct">{{ atleta.cavarinha }}%</span>
-                                    </div>
-                                    <div class="skill-bar">
-                                        <div class="skill-bar-fill" data-width="{{ atleta.cavarinha }}"></div>
-                                    </div>
-                                </div>
-                            </div>
+                    </div>
+                    <div class="hero-stat">
+                        <i class="fas fa-calendar"></i>
+                        <div class="hero-stat-text">
+                            <div class="hero-stat-value">{{ atleta.data_nascimento|date:"d/m/Y" }}</div>
+                            <div class="hero-stat-label">Nascimento</div>
                         </div>
                     </div>
                 </div>
@@ -824,251 +987,405 @@
         </div>
     </section>
 
-    <!-- ===== TRAJETÓRIA ===== -->
-    <section class="py-5" id="trajetoria" style="background: rgba(255,255,255,0.02);">
-        <div class="container py-5">
-            <div class="text-center mb-5" data-aos="fade-up">
-                <div class="section-divider"></div>
-                <h2 class="section-title">Trajetória <span>no Futebol</span></h2>
-                <p class="section-subtitle">A evolução de {{ atleta.nome_artistico }} ao longo dos anos</p>
+    <!-- Sobre Mim -->
+    <section id="sobre">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>Sobre Mim</h2>
+                <div class="accent-line"></div>
+                <p>Conheca um pouco da minha historia dentro das quatro linhas</p>
             </div>
-
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <div class="glass-card" data-aos="fade-up">
-                        <div class="timeline">
-                            {% for clube in atleta.clubes.all %}
-                            <div class="timeline-item" data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:'50' }}">
-                                <div class="year">{{ clube.ano_inicio }} — {{ clube.ano_fim }}</div>
-                                <div class="club-name">{{ clube.nome_clube }}</div>
-                                {% if clube.conquistas %}
-                                <div class="achievement">
-                                    <i class="fa-solid fa-trophy me-1" style="color: var(--accent);"></i>
-                                    {{ clube.conquistas }}
-                                </div>
-                                {% endif %}
-                            </div>
-                            {% empty %}
-                            <div class="text-center py-4" style="color: var(--text-muted);">
-                                <i class="fa-solid fa-road fa-2x mb-2"></i>
-                                <p>Iniciando trajetória oficial.</p>
-                            </div>
-                            {% endfor %}
-                        </div>
+            <div class="about-grid">
+                <div data-aos="fade-right" data-aos-delay="200">
+                    <div class="about-text">
+                        {{ atleta.sobre_mim|linebreaksbr }}
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===== VÍDEO ===== -->
-    <section class="py-5" id="video">
-        <div class="container py-5">
-            <div class="text-center mb-5" data-aos="fade-up">
-                <div class="section-divider"></div>
-                <h2 class="section-title">Destaques em <span>Vídeo</span></h2>
-                <p class="section-subtitle">Assista aos melhores momentos em campo</p>
-            </div>
-
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <div class="video-wrapper" data-aos="fade-up">
-                        {% if atleta.link_video %}
-                        <div class="ratio ratio-16x9">
-                            {% if 'youtube.com' in atleta.link_video or 'youtu.be' in atleta.link_video %}
-                            <iframe src="{{ atleta.link_video|youtube_embed }}" title="Destaques de {{ atleta.nome_artistico }}" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
-                            {% else %}
-                            <video controls playsinline style="width:100%;height:100%;object-fit:contain;background:#000;">
-                                <source src="{{ atleta.link_video }}" type="video/mp4">
-                            </video>
-                            {% endif %}
-                        </div>
-                        {% else %}
-                        <div class="d-flex align-items-center justify-content-center text-center p-5" style="background: var(--gradient-card); min-height: 300px;">
+                    <div class="ficha-tecnica">
+                        <div class="ficha-item">
+                            <i class="fas fa-user"></i>
                             <div>
-                                <div class="mb-3" style="color: var(--text-muted); font-size: 4rem;">
-                                    <i class="fa-solid fa-play"></i>
-                                </div>
-                                <h5 style="color: var(--text-muted);">Vídeo de Destaques</h5>
-                                <p style="color: var(--text-muted); font-size: 0.85rem;">Aguardando a edição final dos lances da temporada.</p>
+                                <div class="label">Nome</div>
+                                <div class="value">{{ atleta.nome_artistico }}</div>
                             </div>
                         </div>
-                        {% endif %}
+                        <div class="ficha-item">
+                            <i class="fas fa-bullseye"></i>
+                            <div>
+                                <div class="label">Posicao</div>
+                                <div class="value">{{ atleta.get_posicao_display }}</div>
+                            </div>
+                        </div>
+                        <div class="ficha-item">
+                            <i class="fas fa-shoe-prints"></i>
+                            <div>
+                                <div class="label">Pe Dominante</div>
+                                <div class="value">{{ atleta.get_pe_dominante_display }}</div>
+                            </div>
+                        </div>
+                        <div class="ficha-item">
+                            <i class="fas fa-ruler-vertical"></i>
+                            <div>
+                                <div class="label">Altura</div>
+                                <div class="value">{{ atleta.altura }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div data-aos="fade-left" data-aos-delay="400">
+                    <div class="field-container" id="miniField">
+                        <div class="field-center-line"></div>
+                        <div class="field-center-circle"></div>
+                        <div class="field-horizontal-line"></div>
+                        <div class="penalty-box-top"></div>
+                        <div class="penalty-box-bottom"></div>
+                        <div class="player-dot" id="playerDot"></div>
+                        <div class="player-label" id="playerLabel"></div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ===== GALERIA ===== -->
-    <section class="py-5" id="galeria" style="background: rgba(255,255,255,0.02);">
-        <div class="container py-5">
-            <div class="text-center mb-5" data-aos="fade-up">
-                <div class="section-divider"></div>
-                <h2 class="section-title">Galeria de <span>Lances</span></h2>
-                <p class="section-subtitle">Momentos que marcam a trajetória</p>
+    <!-- Numeros da Temporada -->
+    <section class="stats-section" id="numeros">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>Numeros da Temporada</h2>
+                <div class="accent-line"></div>
+                <p>{{ estatistica.temporada }}</p>
             </div>
+            <div class="stats-grid">
+                <div class="stat-card" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="stat-icon"><i class="fas fa-futbol"></i></div>
+                    <div class="stat-number" data-count="{{ estatistica.gols }}">0</div>
+                    <div class="stat-label">Gols</div>
+                    <span class="stat-temporada">{{ estatistica.temporada }}</span>
+                </div>
+                <div class="stat-card" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="stat-icon"><i class="fas fa-hand-holding-heart"></i></div>
+                    <div class="stat-number" data-count="{{ estatistica.assistencias }}">0</div>
+                    <div class="stat-label">Assistencias</div>
+                    <span class="stat-temporada">{{ estatistica.temporada }}</span>
+                </div>
+                <div class="stat-card" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="stat-icon"><i class="fas fa-trophy"></i></div>
+                    <div class="stat-number" data-count="{{ estatistica.jogos }}">0</div>
+                    <div class="stat-label">Jogos</div>
+                    <span class="stat-temporada">{{ estatistica.temporada }}</span>
+                </div>
+                <div class="stat-card" data-aos="zoom-in" data-aos-delay="400">
+                    <div class="stat-icon"><i class="fas fa-clock"></i></div>
+                    <div class="stat-number" data-count="{{ estatistica.minutos }}">0</div>
+                    <div class="stat-label">Minutos</div>
+                    <span class="stat-temporada">{{ estatistica.temporada }}</span>
+                </div>
+            </div>
+        </div>
+    </section>
 
-            <div class="row g-3 justify-content-center">
-                {% for foto in atleta.fotos.all %}
-                <div class="col-6 col-md-4 col-lg-3" data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:'50' }}">
-                    <div class="gallery-item">
-                        <a href="{{ foto.imagem.url }}" data-lightbox="galeria-lances" data-title="{{ foto.legenda }}">
-                            <img src="{{ foto.imagem.url }}" alt="{{ foto.legenda }}">
-                        </a>
-                        {% if foto.legenda %}
-                        <div class="overlay">
-                            <span>{{ foto.legenda }}</span>
+    <!-- Habilidades -->
+    <section id="habilidades">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>Habilidades</h2>
+                <div class="accent-line"></div>
+                <p>As qualificacoes que fazem a diferenca em campo</p>
+            </div>
+            <div class="row">
+                <div class="col-lg-4" data-aos="fade-right" data-aos-delay="100">
+                    <div class="skills-category">
+                        <div class="skill-category-title"><i class="fas fa-crosshairs"></i> Ofensivas</div>
+                        <div class="skill-item">
+                            <div class="skill-header"><span class="skill-name">Finalizacao</span><span class="skill-value">92%</span></div>
+                            <div class="skill-bar"><div class="skill-fill" data-width="92"></div></div>
                         </div>
-                        {% endif %}
+                        <div class="skill-item">
+                            <div class="skill-header"><span class="skill-name">Dribles</span><span class="skill-value">88%</span></div>
+                            <div class="skill-bar"><div class="skill-fill" data-width="88"></div></div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-header"><span class="skill-name">Cavarinha</span><span class="skill-value">85%</span></div>
+                            <div class="skill-bar"><div class="skill-fill" data-width="85"></div></div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-header"><span class="skill-name">Visao de Jogo</span><span class="skill-value">90%</span></div>
+                            <div class="skill-bar"><div class="skill-fill" data-width="90"></div></div>
+                        </div>
                     </div>
                 </div>
-                {% empty %}
-                <div class="col-12 text-center py-5" style="color: var(--text-muted);">
-                    <i class="fa-solid fa-camera fa-3x mb-3"></i>
-                    <p>Aguardando registro dos primeiros lances oficiais.</p>
+                <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="skills-category">
+                        <div class="skill-category-title"><i class="fas fa-shield-halved"></i> Defensivas</div>
+                        <div class="skill-item">
+                            <div class="skill-header"><span class="skill-name">Defesa</span><span class="skill-value">75%</span></div>
+                            <div class="skill-bar"><div class="skill-fill" data-width="75"></div></div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-header"><span class="skill-name">Fisico</span><span class="skill-value">82%</span></div>
+                            <div class="skill-bar"><div class="skill-fill" data-width="82"></div></div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-header"><span class="skill-name">Disputa Aerea</span><span class="skill-value">78%</span></div>
+                            <div class="skill-bar"><div class="skill-fill" data-width="78"></div></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4" data-aos="fade-left" data-aos-delay="300">
+                    <div class="skills-category">
+                        <div class="skill-category-title"><i class="fas fa-cogs"></i> Tecnicas</div>
+                        <div class="skill-item">
+                            <div class="skill-header"><span class="skill-name">Controle</span><span class="skill-value">91%</span></div>
+                            <div class="skill-bar"><div class="skill-fill" data-width="91"></div></div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-header"><span class="skill-name">Passe</span><span class="skill-value">87%</span></div>
+                            <div class="skill-bar"><div class="skill-fill" data-width="87"></div></div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-header"><span class="skill-name">Velocidade</span><span class="skill-value">89%</span></div>
+                            <div class="skill-bar"><div class="skill-fill" data-width="89"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trajetoria -->
+    <section id="trajetoria" style="background: linear-gradient(180deg, var(--dark-card), var(--dark));">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>Trajetoria</h2>
+                <div class="accent-line"></div>
+                <p>A jornada que me trouxe ate aqui</p>
+            </div>
+            <div class="timeline">
+                {% for clube in atleta.clubes.all %}
+                <div class="timeline-item" data-aos="fade-right" data-aos-delay="{{ forloop.counter0|add:1 }}00">
+                    <div class="timeline-year">{{ clube.ano_inicio }} - {{ clube.ano_fim|default:"Presente" }}</div>
+                    <div class="timeline-clube">{{ clube.nome }}</div>
+                    <div class="timeline-desc">{{ clube.descricao }}</div>
                 </div>
                 {% endfor %}
             </div>
         </div>
     </section>
 
-    <!-- ===== CONTATO ===== -->
-    <section class="py-5" id="contato">
-        <div class="container py-5">
-            <div class="text-center mb-5" data-aos="fade-up">
-                <div class="section-divider"></div>
-                <h2 class="section-title">Entre em <span>Contato</span></h2>
-                <p class="section-subtitle">Redes sociais e canais oficiais</p>
+    <!-- Video -->
+    <section id="video">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>Video Destaque</h2>
+                <div class="accent-line"></div>
+                <p>Melhores momentos e jogadas imperdiveis</p>
             </div>
-
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <div class="glass-card text-center" data-aos="fade-up">
-                        <p class="mb-4" style="color: var(--text-muted);">
-                            Acompanhe {{ atleta.nome_artistico }} nas redes sociais ou entre em contato com o responsável.
-                        </p>
-                        <div class="d-flex flex-wrap justify-content-center gap-3">
-                            {% if atleta.instagram %}
-                            <a href="https://instagram.com/{{ atleta.instagram }}" target="_blank" class="btn btn-instagram">
-                                <i class="fa-brands fa-instagram me-2"></i> Instagram
-                            </a>
-                            {% endif %}
-                            {% if atleta.whatsapp %}
-                            <a href="https://wa.me/55{{ atleta.whatsapp }}" target="_blank" class="btn btn-whatsapp">
-                                <i class="fa-brands fa-whatsapp me-2"></i> WhatsApp
-                            </a>
-                            {% endif %}
-                            <a href="#home" class="btn btn-outline-light-custom">
-                                <i class="fa-solid fa-arrow-up me-2"></i> Voltar ao Topo
-                            </a>
-                        </div>
-                    </div>
-                </div>
+            <div class="video-wrapper" data-aos="zoom-in" data-aos-delay="200">
+                {{ atleta.link_video|youtube_embed }}
             </div>
         </div>
     </section>
 
-    <!-- ===== FOOTER ===== -->
-    <footer class="footer">
+    <!-- Galeria -->
+    <section id="galeria" style="background: linear-gradient(180deg, var(--dark), var(--dark-card));">
         <div class="container">
-            <p class="mb-0">
-                &copy; {% now "Y" %} <span class="brand">{{ atleta.nome_artistico }}</span> — Perfil Oficial.
-                Todos os direitos reservados.
-            </p>
-            <p class="mb-0 mt-1" style="font-size: 0.75rem;">
-                Feito com <i class="fa-solid fa-heart" style="color: var(--accent);"></i> para o futebol
-            </p>
+            <div class="section-title" data-aos="fade-up">
+                <h2>Galeria</h2>
+                <div class="accent-line"></div>
+                <p>Momentos memoraveis em campo e fora dele</p>
+            </div>
+            <div class="gallery-grid">
+                {% for foto in atleta.fotos.all %}
+                <a href="{{ foto.imagem.url }}" class="gallery-item" data-lightbox="galeria" data-title="{{ foto.legenda|default:'' }}" data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:1 }}00">
+                    <img src="{{ foto.imagem.url }}" alt="{{ foto.legenda|default:'Foto do atleta' }}">
+                    <div class="gallery-overlay"><i class="fas fa-expand"></i></div>
+                </a>
+                {% endfor %}
+            </div>
         </div>
+    </section>
+
+    <!-- Depoimentos -->
+    <section id="depoimentos">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>Depoimentos</h2>
+                <div class="accent-line"></div>
+                <p>O que dizem sobre mim</p>
+            </div>
+            <div class="row">
+                {% for depoimento in atleta.depoimentos.all %}
+                <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:1 }}00">
+                    <div class="testimonial-card">
+                        <div class="testimonial-quote"><i class="fas fa-quote-left"></i></div>
+                        <p class="testimonial-text">{{ depoimento.texto }}</p>
+                        <div class="testimonial-author">{{ depoimento.autor }}</div>
+                        <div class="testimonial-role">{{ depoimento.cargo }}</div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Contato -->
+    <section id="contato" style="background: linear-gradient(135deg, var(--grass), var(--grass-light));">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>Contato</h2>
+                <div class="accent-line"></div>
+                <p>Entre em contato ou acompanhe minhas redes</p>
+            </div>
+            <div class="contact-buttons" data-aos="zoom-in" data-aos-delay="200">
+                <a href="{{ atleta.instagram }}" target="_blank" class="contact-btn btn-instagram">
+                    <i class="fab fa-instagram"></i> Instagram
+                </a>
+                <a href="https://wa.me/{{ atleta.whatsapp }}" target="_blank" class="contact-btn btn-whatsapp">
+                    <i class="fab fa-whatsapp"></i> WhatsApp
+                </a>
+                <button class="contact-btn btn-share" onclick="compartilhar()">
+                    <i class="fas fa-share-alt"></i> Compartilhar
+                </button>
+                <a href="#inicio" class="contact-btn btn-topo">
+                    <i class="fas fa-arrow-up"></i> Voltar ao Topo
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; {% now "Y" %} <span class="accent">{{ atleta.nome_artistico }}</span>. Todos os direitos reservados.</p>
     </footer>
 
-    <!-- ===== FLOATING SOCIAL BUTTONS ===== -->
-    <div class="float-social">
-        {% if atleta.whatsapp %}
-        <a href="https://wa.me/55{{ atleta.whatsapp }}" target="_blank" class="float-wpp" title="Fale no WhatsApp">
-            <i class="fa-brands fa-whatsapp"></i>
-        </a>
-        {% endif %}
-        {% if atleta.instagram %}
-        <a href="https://instagram.com/{{ atleta.instagram }}" target="_blank" class="float-ig" title="Instagram">
-            <i class="fa-brands fa-instagram"></i>
-        </a>
-        {% endif %}
-    </div>
-
-    <!-- ===== SCRIPTS ===== -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox-plus-jquery.min.js"></script>
-
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
     <script>
-        AOS.init({
-            duration: 800,
-            once: true,
-            offset: 50,
+        AOS.init({ duration: 800, once: true, offset: 50 });
+
+        // Theme Toggle
+        const toggle = document.getElementById('themeToggle');
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+            document.body.classList.add('light-theme');
+            toggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+        toggle.addEventListener('click', () => {
+            document.body.classList.toggle('light-theme');
+            const isLight = document.body.classList.contains('light-theme');
+            toggle.innerHTML = isLight ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
         });
 
-        lightbox.option({
-            'resizeDuration': 200,
-            'wrapAround': true,
-            'maxWidth': 900,
-            'maxHeight': 700,
-            'fadeDuration': 300,
-            'albumLabel': 'Foto %1 de %2'
-        });
+        // Countdown
+        function updateCountdown() {
+            const nascimento = new Date('{{ atleta.data_nascimento|date:"Y-m-d" }}');
+            const agora = new Date();
+            let anos = agora.getFullYear() - nascimento.getFullYear();
+            let meses = agora.getMonth() - nascimento.getMonth();
+            let dias = agora.getDate() - nascimento.getDate();
+            if (dias < 0) { meses--; dias += new Date(agora.getFullYear(), agora.getMonth(), 0).getDate(); }
+            if (meses < 0) { anos--; meses += 12; }
+            document.getElementById('cd-years').textContent = anos;
+            document.getElementById('cd-months').textContent = meses;
+            document.getElementById('cd-days').textContent = dias;
+            document.getElementById('cd-hours').textContent = agora.getHours();
+        }
+        updateCountdown();
+        setInterval(updateCountdown, 3600000);
 
-        // Animate skill bars on scroll
-        function animateSkillBars() {
-            document.querySelectorAll('.skill-bar-fill').forEach(function(bar) {
-                var rect = bar.getBoundingClientRect();
-                var winHeight = window.innerHeight;
-                if (rect.top < winHeight - 50 && !bar.classList.contains('animated')) {
-                    bar.classList.add('animated');
+        // Stats Counter
+        function animateCounters() {
+            document.querySelectorAll('.stat-number[data-count]').forEach(el => {
+                const target = parseInt(el.getAttribute('data-count'));
+                const duration = 2000;
+                const step = target / (duration / 16);
+                let current = 0;
+                const timer = setInterval(() => {
+                    current += step;
+                    if (current >= target) { current = target; clearInterval(timer); }
+                    el.textContent = Math.floor(current);
+                }, 16);
+            });
+        }
+
+        // Skill Bars Animation
+        function animateSkills() {
+            document.querySelectorAll('.skill-fill').forEach(bar => {
+                const rect = bar.getBoundingClientRect();
+                if (rect.top < window.innerHeight && !bar.classList.contains('animated')) {
                     bar.style.width = bar.getAttribute('data-width') + '%';
+                    bar.classList.add('animated');
                 }
             });
         }
 
-        window.addEventListener('scroll', animateSkillBars);
-        window.addEventListener('load', animateSkillBars);
+        // Scroll Effects
+        let statsAnimated = false;
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('mainNav');
+            nav.classList.toggle('scrolled', window.scrollY > 50);
 
-        // Smooth scroll
-        document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
-            anchor.addEventListener('click', function(e) {
-                var target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    e.preventDefault();
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            document.querySelectorAll('.nav-link').forEach(link => {
+                const section = document.querySelector(link.getAttribute('href'));
+                if (section) {
+                    const top = section.offsetTop - 100;
+                    const bottom = top + section.offsetHeight;
+                    link.classList.toggle('active', window.scrollY >= top && window.scrollY < bottom);
                 }
             });
-        });
 
-        // Navbar scroll effect
-        window.addEventListener('scroll', function() {
-            var nav = document.getElementById('mainNav');
-            if (window.scrollY > 50) {
-                nav.classList.add('scrolled');
-            } else {
-                nav.classList.remove('scrolled');
+            const statsSection = document.getElementById('numeros');
+            if (statsSection && window.scrollY > statsSection.offsetTop - 400 && !statsAnimated) {
+                animateCounters();
+                statsAnimated = true;
             }
 
-            // Active link highlight
-            var sections = document.querySelectorAll('section[id]');
-            var navLinks = document.querySelectorAll('.nav-link');
-            var current = '';
-            sections.forEach(function(section) {
-                var sectionTop = section.offsetTop - 100;
-                if (window.scrollY >= sectionTop) {
-                    current = section.getAttribute('id');
-                }
-            });
-            navLinks.forEach(function(link) {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === '#' + current) {
-                    link.classList.add('active');
+            animateSkills();
+        });
+
+        // Mini Field Position
+        function setPosition() {
+            const positions = {
+                'GOL': { top: '85%', left: '50%' },
+                'ZAG': { top: '72%', left: '50%' },
+                'LAT': { top: '65%', left: '85%' },
+                'MEI': { top: '50%', left: '50%' },
+                'ATA': { top: '25%', left: '50%' },
+                'PON': { top: '35%', left: '20%' }
+            };
+            const pos = '{{ atleta.get_posicao_display }}';
+            const coords = positions[pos] || { top: '50%', left: '50%' };
+            const dot = document.getElementById('playerDot');
+            const label = document.getElementById('playerLabel');
+            dot.style.top = coords.top;
+            dot.style.left = coords.left;
+            label.style.top = `calc(${coords.top} + 18px)`;
+            label.style.left = coords.left;
+            label.textContent = pos;
+        }
+        setPosition();
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({ top: target.offsetTop - 70, behavior: 'smooth' });
                 }
             });
         });
+
+        // Share
+        function compartilhar() {
+            if (navigator.share) {
+                navigator.share({ title: '{{ atleta.nome_artistico }}', text: 'Conheca {{ atleta.nome_artistico }}!', url: window.location.href });
+            } else {
+                navigator.clipboard.writeText(window.location.href).then(() => alert('Link copiado!'));
+            }
+        }
     </script>
 </body>
 </html>
