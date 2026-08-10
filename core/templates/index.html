@@ -707,9 +707,10 @@
             position: relative;
             border-radius: 12px;
             overflow: hidden;
-            aspect-ratio: 4/3;
             border: 2px solid rgba(201, 168, 76, 0.1);
             transition: all 0.3s ease;
+            display: block;
+            text-decoration: none;
         }
 
         .gallery-item:hover {
@@ -719,37 +720,19 @@
 
         .gallery-item img {
             width: 100%;
-            height: 100%;
+            height: 200px;
             object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .gallery-item:hover img {
-            transform: scale(1.1);
-        }
-
-        .gallery-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(180deg, transparent, rgba(15, 10, 6, 0.95));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px 10px 12px;
-        }
-
-        .gallery-overlay i {
-            display: none;
+            display: block;
         }
 
         .gallery-caption {
+            display: block;
+            background: rgba(15, 10, 6, 0.9);
             color: #fff;
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             font-weight: 600;
             text-align: center;
-            text-shadow: 0 1px 4px rgba(0,0,0,0.9);
+            padding: 10px 8px;
             line-height: 1.3;
         }
 
@@ -1238,14 +1221,11 @@
             </div>
             <div class="gallery-grid">
                 {% for foto in atleta.fotos.all %}
-                <a href="{{ foto.imagem.url }}" class="gallery-item" data-lightbox="galeria" data-title="{{ foto.legenda|default:'' }}" data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:1 }}00">
+                <a href="{{ foto.imagem.url }}" class="gallery-item" data-lightbox="galeria" data-title="{{ foto.legenda|default:'' }}">
                     <img src="{{ foto.imagem.url }}" alt="{{ foto.legenda|default:'Foto do atleta' }}">
-                    <div class="gallery-overlay">
-                        <i class="fas fa-expand"></i>
-                        {% if foto.legenda %}
-                        <span class="gallery-caption">{{ foto.legenda }}</span>
-                        {% endif %}
-                    </div>
+                    {% if foto.legenda %}
+                    <span class="gallery-caption">{{ foto.legenda }}</span>
+                    {% endif %}
                 </a>
                 {% endfor %}
             </div>
@@ -1311,6 +1291,17 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
     <script>
         AOS.init({ duration: 800, once: true, offset: 50 });
+
+        // Lightbox
+        lightbox.option({
+            resizeDuration: 200,
+            wrapAround: true,
+            maxWidth: 900,
+            maxHeight: 700,
+            fadeDuration: 300,
+            albumLabel: 'Foto %1 de %2',
+            alwaysShowNavOnTouchDevices: true
+        });
 
         // Theme Toggle
         const toggle = document.getElementById('themeToggle');
