@@ -38,6 +38,13 @@ class Atleta(models.Model):
     visao_jogo = models.IntegerField("Visão de Jogo (0-100)", default=80)
     precisao_passe = models.IntegerField("Precisão de Passe (0-100)", default=80)
     controle_bola = models.IntegerField("Controle de Bola (0-100)", default=80)
+    velocidade = models.IntegerField("Velocidade (0-100)", default=75)
+    dribles = models.IntegerField("Dribles (0-100)", default=70)
+    finalizacao = models.IntegerField("Finalização (0-100)", default=65)
+    defesa = models.IntegerField("Defesa (0-100)", default=60)
+    fisico = models.IntegerField("Físico (0-100)", default=75)
+    disputa_aerea = models.IntegerField("Disputa Aérea (0-100)", default=55)
+    cavarinha = models.IntegerField("Cavarinha (0-100)", default=70)
 
     def __str__(self):
         return self.nome_artistico

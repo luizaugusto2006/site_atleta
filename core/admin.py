@@ -27,7 +27,7 @@ class AtletaAdmin(admin.ModelAdmin):
             'fields': ['instagram', 'whatsapp', 'link_video']
         }),
         ('Habilidades Técnicas', {
-            'fields': ['visao_jogo', 'precisao_passe', 'controle_bola']
+            'fields': ['visao_jogo', 'precisao_passe', 'controle_bola', 'velocidade', 'dribles', 'finalizacao', 'defesa', 'fisico', 'disputa_aerea', 'cavarinha']
         }),
     ]
     inlines = [FotoInline, HistoricoClubeInline]

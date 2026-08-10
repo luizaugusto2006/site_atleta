@@ -1,3 +1,4 @@
+{% load video_tags %}
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -560,6 +561,23 @@
             .hero-stat-item .number { font-size: 1.3rem; }
         }
 
+        .nav-link {
+            color: var(--text-light) !important;
+            font-size: 0.85rem;
+            font-weight: 500;
+            padding: 0.5rem 1rem !important;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--accent) !important;
+        }
+
+        .navbar.scrolled {
+            background: rgba(10, 15, 13, 0.95) !important;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+        }
+
         /* ===== PARTICLES / SPARKLE ===== */
         .sparkle {
             position: absolute;
@@ -573,6 +591,29 @@
     </style>
 </head>
 <body>
+
+    <!-- ===== NAVBAR ===== -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav" style="background: rgba(10, 15, 13, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.06); transition: all 0.3s ease;">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#home" style="color: var(--accent); font-size: 1.2rem;">
+                <i class="fa-solid fa-futbol me-2"></i>{{ atleta.nome_artistico }}
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#home">Início</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#sobre">Ficha Técnica</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#habilidades">Habilidades</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#trajetoria">Trajetória</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#video">Vídeo</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#galeria">Galeria</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contato">Contato</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
     <!-- ===== HERO ===== -->
     <section class="hero" id="home">
@@ -616,7 +657,7 @@
     </section>
 
     <!-- ===== FICHA TÉCNICA ===== -->
-    <section class="py-5" id="sobre">
+    <section class="py-5" id="sobre" style="padding-top: 80px !important;">
         <div class="container py-5">
             <div class="text-center mb-5" data-aos="fade-up">
                 <div class="section-divider"></div>
@@ -688,7 +729,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6 offset-md-3">
+                            <div class="col-md-6">
                                 <div class="skill-item" data-aos="fade-up" data-aos-delay="200">
                                     <div class="skill-info">
                                         <span class="name">Controle de Bola</span>
@@ -696,6 +737,83 @@
                                     </div>
                                     <div class="skill-bar">
                                         <div class="skill-bar-fill" data-width="{{ atleta.controle_bola }}"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="skill-item" data-aos="fade-up" data-aos-delay="300">
+                                    <div class="skill-info">
+                                        <span class="name">Velocidade</span>
+                                        <span class="pct">{{ atleta.velocidade }}%</span>
+                                    </div>
+                                    <div class="skill-bar">
+                                        <div class="skill-bar-fill" data-width="{{ atleta.velocidade }}"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="skill-item" data-aos="fade-up" data-aos-delay="400">
+                                    <div class="skill-info">
+                                        <span class="name">Dribles</span>
+                                        <span class="pct">{{ atleta.dribles }}%</span>
+                                    </div>
+                                    <div class="skill-bar">
+                                        <div class="skill-bar-fill" data-width="{{ atleta.dribles }}"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="skill-item" data-aos="fade-up" data-aos-delay="500">
+                                    <div class="skill-info">
+                                        <span class="name">Finalização</span>
+                                        <span class="pct">{{ atleta.finalizacao }}%</span>
+                                    </div>
+                                    <div class="skill-bar">
+                                        <div class="skill-bar-fill" data-width="{{ atleta.finalizacao }}"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="skill-item" data-aos="fade-up" data-aos-delay="600">
+                                    <div class="skill-info">
+                                        <span class="name">Defesa</span>
+                                        <span class="pct">{{ atleta.defesa }}%</span>
+                                    </div>
+                                    <div class="skill-bar">
+                                        <div class="skill-bar-fill" data-width="{{ atleta.defesa }}"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="skill-item" data-aos="fade-up" data-aos-delay="700">
+                                    <div class="skill-info">
+                                        <span class="name">Físico</span>
+                                        <span class="pct">{{ atleta.fisico }}%</span>
+                                    </div>
+                                    <div class="skill-bar">
+                                        <div class="skill-bar-fill" data-width="{{ atleta.fisico }}"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="skill-item" data-aos="fade-up" data-aos-delay="800">
+                                    <div class="skill-info">
+                                        <span class="name">Disputa Aérea</span>
+                                        <span class="pct">{{ atleta.disputa_aerea }}%</span>
+                                    </div>
+                                    <div class="skill-bar">
+                                        <div class="skill-bar-fill" data-width="{{ atleta.disputa_aerea }}"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="skill-item" data-aos="fade-up" data-aos-delay="900">
+                                    <div class="skill-info">
+                                        <span class="name">Cavarinha</span>
+                                        <span class="pct">{{ atleta.cavarinha }}%</span>
+                                    </div>
+                                    <div class="skill-bar">
+                                        <div class="skill-bar-fill" data-width="{{ atleta.cavarinha }}"></div>
                                     </div>
                                 </div>
                             </div>
@@ -758,7 +876,7 @@
                         {% if atleta.link_video %}
                         <div class="ratio ratio-16x9">
                             {% if 'youtube.com' in atleta.link_video or 'youtu.be' in atleta.link_video %}
-                            <iframe src="{{ atleta.link_video|safe }}" title="Destaques de {{ atleta.nome_artistico }}" frameborder="0" allowfullscreen></iframe>
+                            <iframe src="{{ atleta.link_video|youtube_embed }}" title="Destaques de {{ atleta.nome_artistico }}" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
                             {% else %}
                             <video controls playsinline style="width:100%;height:100%;object-fit:contain;background:#000;">
                                 <source src="{{ atleta.link_video }}" type="video/mp4">
@@ -921,6 +1039,33 @@
                 if (target) {
                     e.preventDefault();
                     target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            var nav = document.getElementById('mainNav');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+
+            // Active link highlight
+            var sections = document.querySelectorAll('section[id]');
+            var navLinks = document.querySelectorAll('.nav-link');
+            var current = '';
+            sections.forEach(function(section) {
+                var sectionTop = section.offsetTop - 100;
+                if (window.scrollY >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+            navLinks.forEach(function(link) {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
                 }
             });
         });
