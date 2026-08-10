@@ -7,9 +7,11 @@ from .models import Atleta
 def home(request):
     atleta = Atleta.objects.first()
     estatistica = atleta.estatisticas.first() if atleta else None
+    estatisticas = atleta.estatisticas.all() if atleta else []
     return render(request, 'index.html', {
         'atleta': atleta,
         'estatistica': estatistica,
+        'estatisticas': estatisticas,
     })
 
 def media_serve(request, path):

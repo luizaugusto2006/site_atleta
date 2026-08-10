@@ -1131,40 +1131,45 @@
         </div>
     </section>
 
-    <!-- Numeros da Temporada -->
+    <!-- Números da Temporada -->
     <section class="stats-section" id="numeros">
         <div class="container">
             <div class="section-title" data-aos="fade-up">
                 <h2>Números da Temporada</h2>
                 <div class="accent-line"></div>
-                <p>{{ estatistica.temporada }}</p>
             </div>
-            <div class="stats-grid">
-                <div class="stat-card" data-aos="zoom-in" data-aos-delay="100">
-                    <div class="stat-icon"><i class="fas fa-futbol"></i></div>
-                    <div class="stat-number" data-count="{{ estatistica.gols }}">0</div>
-                    <div class="stat-label">Gols</div>
-                    <span class="stat-temporada">{{ estatistica.temporada }}</span>
-                </div>
-                <div class="stat-card" data-aos="zoom-in" data-aos-delay="200">
-                    <div class="stat-icon"><i class="fas fa-hand-holding-heart"></i></div>
-                    <div class="stat-number" data-count="{{ estatistica.assistencias }}">0</div>
-                    <div class="stat-label">Assistências</div>
-                    <span class="stat-temporada">{{ estatistica.temporada }}</span>
-                </div>
-                <div class="stat-card" data-aos="zoom-in" data-aos-delay="300">
-                    <div class="stat-icon"><i class="fas fa-trophy"></i></div>
-                    <div class="stat-number" data-count="{{ estatistica.jogos }}">0</div>
-                    <div class="stat-label">Jogos</div>
-                    <span class="stat-temporada">{{ estatistica.temporada }}</span>
-                </div>
-                <div class="stat-card" data-aos="zoom-in" data-aos-delay="400">
-                    <div class="stat-icon"><i class="fas fa-clock"></i></div>
-                    <div class="stat-number" data-count="{{ estatistica.minutos }}">0</div>
-                    <div class="stat-label">Minutos</div>
-                    <span class="stat-temporada">{{ estatistica.temporada }}</span>
+            {% for est in estatisticas %}
+            <div style="margin-bottom: 40px;">
+                <h3 style="text-align: center; color: var(--accent); margin-bottom: 25px; font-size: 1.3rem;" data-aos="fade-up">{{ est.temporada }}</h3>
+                <div class="stats-grid">
+                    <div class="stat-card" data-aos="zoom-in" data-aos-delay="100">
+                        <div class="stat-icon"><i class="fas fa-futbol"></i></div>
+                        <div class="stat-number" data-count="{{ est.gols }}">0</div>
+                        <div class="stat-label">Gols</div>
+                    </div>
+                    <div class="stat-card" data-aos="zoom-in" data-aos-delay="200">
+                        <div class="stat-icon"><i class="fas fa-hand-holding-heart"></i></div>
+                        <div class="stat-number" data-count="{{ est.assistencias }}">0</div>
+                        <div class="stat-label">Assistências</div>
+                    </div>
+                    <div class="stat-card" data-aos="zoom-in" data-aos-delay="300">
+                        <div class="stat-icon"><i class="fas fa-trophy"></i></div>
+                        <div class="stat-number" data-count="{{ est.jogos }}">0</div>
+                        <div class="stat-label">Jogos</div>
+                    </div>
+                    <div class="stat-card" data-aos="zoom-in" data-aos-delay="400">
+                        <div class="stat-icon"><i class="fas fa-clock"></i></div>
+                        <div class="stat-number" data-count="{{ est.minutos }}">0</div>
+                        <div class="stat-label">Minutos</div>
+                    </div>
                 </div>
             </div>
+            {% empty %}
+            <div class="text-center py-4" style="color: var(--text-muted);">
+                <i class="fas fa-chart-bar fa-2x mb-2"></i>
+                <p>Estatísticas ainda não adicionadas.</p>
+            </div>
+            {% endfor %}
         </div>
     </section>
 
