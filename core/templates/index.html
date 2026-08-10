@@ -707,33 +707,80 @@
             position: relative;
             border-radius: 12px;
             overflow: hidden;
+            aspect-ratio: 4/3;
             border: 2px solid rgba(201, 168, 76, 0.1);
             transition: all 0.3s ease;
             display: block;
             text-decoration: none;
+            cursor: pointer;
         }
 
         .gallery-item:hover {
             border-color: var(--accent);
-            transform: scale(1.02);
+            transform: scale(1.03);
+            box-shadow: 0 8px 25px rgba(201, 168, 76, 0.3);
         }
 
         .gallery-item img {
             width: 100%;
-            height: 200px;
+            height: 100%;
             object-fit: cover;
-            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
         }
 
         .gallery-caption {
-            display: block;
-            background: rgba(15, 10, 6, 0.9);
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(180deg, transparent, rgba(15, 10, 6, 0.95));
             color: #fff;
             font-size: 0.8rem;
             font-weight: 600;
             text-align: center;
-            padding: 10px 8px;
+            padding: 25px 10px 12px;
             line-height: 1.3;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+        }
+
+        /* Lightbox overrides */
+        .lb-dataContainer {
+            background: rgba(15, 10, 6, 0.95) !important;
+            border-radius: 0 0 8px 8px;
+            padding: 10px !important;
+        }
+        .lb-caption {
+            color: #fff !important;
+            font-size: 0.9rem !important;
+        }
+        .lb-closeContainer {
+            background: rgba(15, 10, 6, 0.95) !important;
+            border-radius: 0 0 8px 8px;
+        }
+        .lb-dataContainer .lb-close {
+            background-image: url('data:image/svg+xml;charset=utf-8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"%3E%3Cpath d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/%3E%3C/svg%3E') !important;
+            width: 30px !important;
+            height: 30px !important;
+        }
+        .lb-nav {
+            opacity: 1 !important;
+        }
+        .lb-prev, .lb-next {
+            background-image: none !important;
+            width: 50px !important;
+        }
+        .lb-prev span, .lb-next span {
+            background: rgba(201, 168, 76, 0.7) !important;
+            border-radius: 50%;
+            width: 40px !important;
+            height: 40px !important;
+        }
+        .lb-prev span:hover, .lb-next span:hover {
+            background: var(--accent) !important;
         }
 
         /* Testimonials */
@@ -1300,7 +1347,15 @@
             maxHeight: 700,
             fadeDuration: 300,
             albumLabel: 'Foto %1 de %2',
-            alwaysShowNavOnTouchDevices: true
+            alwaysShowNavOnTouchDevices: true,
+            positionFromTop: 50
+        });
+
+        // Fechar lightbox com ESC ou clique fora
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && document.querySelector('.lb-overlay')) {
+                lightbox.close();
+            }
         });
 
         // Theme Toggle
