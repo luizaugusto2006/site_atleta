@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -747,40 +746,83 @@
             text-shadow: 0 1px 3px rgba(0,0,0,0.8);
         }
 
-        /* Lightbox overrides */
-        .lb-dataContainer {
-            background: rgba(15, 10, 6, 0.95) !important;
-            border-radius: 0 0 8px 8px;
-            padding: 10px !important;
+        /* Custom Modal Lightbox */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
         }
-        .lb-caption {
-            color: #fff !important;
-            font-size: 0.9rem !important;
+        .modal-overlay.active {
+            display: flex;
         }
-        .lb-closeContainer {
-            background: rgba(15, 10, 6, 0.95) !important;
-            border-radius: 0 0 8px 8px;
-        }
-        .lb-dataContainer .lb-close {
-            background-image: url('data:image/svg+xml;charset=utf-8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"%3E%3Cpath d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/%3E%3C/svg%3E') !important;
-            width: 30px !important;
-            height: 30px !important;
-        }
-        .lb-nav {
-            opacity: 1 !important;
-        }
-        .lb-prev, .lb-next {
-            background-image: none !important;
-            width: 50px !important;
-        }
-        .lb-prev span, .lb-next span {
-            background: rgba(201, 168, 76, 0.7) !important;
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            color: #fff;
+            font-size: 2rem;
+            cursor: pointer;
+            z-index: 10001;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(201, 168, 76, 0.8);
             border-radius: 50%;
-            width: 40px !important;
-            height: 40px !important;
+            transition: all 0.3s ease;
+            border: none;
         }
-        .lb-prev span:hover, .lb-next span:hover {
-            background: var(--accent) !important;
+        .modal-close:hover {
+            background: var(--accent);
+            transform: scale(1.1);
+        }
+        .modal-img {
+            max-width: 90vw;
+            max-height: 80vh;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 10px 50px rgba(0,0,0,0.5);
+        }
+        .modal-caption {
+            color: #fff;
+            font-size: 1rem;
+            margin-top: 15px;
+            text-align: center;
+            font-weight: 500;
+        }
+        .modal-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #fff;
+            font-size: 2rem;
+            cursor: pointer;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(201, 168, 76, 0.7);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            border: none;
+            z-index: 10001;
+        }
+        .modal-nav:hover {
+            background: var(--accent);
+        }
+        .modal-prev { left: 15px; }
+        .modal-next { right: 15px; }
+        .modal-counter {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.85rem;
+            margin-top: 8px;
         }
 
         /* Testimonials */
@@ -1266,14 +1308,14 @@
                 <div class="accent-line"></div>
                 <p>Momentos memoraveis em campo e fora dele</p>
             </div>
-            <div class="gallery-grid">
+            <div class="gallery-grid" id="galleryGrid">
                 {% for foto in atleta.fotos.all %}
-                <a href="{{ foto.imagem.url }}" class="gallery-item" data-lightbox="galeria" data-title="{{ foto.legenda|default:'' }}">
+                <div class="gallery-item" data-src="{{ foto.imagem.url }}" data-caption="{{ foto.legenda|default:'' }}">
                     <img src="{{ foto.imagem.url }}" alt="{{ foto.legenda|default:'Foto do atleta' }}">
                     {% if foto.legenda %}
                     <span class="gallery-caption">{{ foto.legenda }}</span>
                     {% endif %}
-                </a>
+                </div>
                 {% endfor %}
             </div>
         </div>
@@ -1327,6 +1369,16 @@
         </div>
     </section>
 
+    <!-- Modal Lightbox Customizado -->
+    <div class="modal-overlay" id="imageModal">
+        <button class="modal-close" id="modalClose">&times;</button>
+        <button class="modal-nav modal-prev" id="modalPrev">&#10094;</button>
+        <button class="modal-nav modal-next" id="modalNext">&#10095;</button>
+        <img class="modal-img" id="modalImg" src="" alt="">
+        <div class="modal-caption" id="modalCaption"></div>
+        <div class="modal-counter" id="modalCounter"></div>
+    </div>
+
     <!-- Footer -->
     <footer>
         <p>&copy; {% now "Y" %} <span class="accent">{{ atleta.nome_artistico }}</span>. Todos os direitos reservados.</p>
@@ -1335,27 +1387,61 @@
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
     <script>
         AOS.init({ duration: 800, once: true, offset: 50 });
 
-        // Lightbox
-        lightbox.option({
-            resizeDuration: 200,
-            wrapAround: true,
-            maxWidth: 900,
-            maxHeight: 700,
-            fadeDuration: 300,
-            albumLabel: 'Foto %1 de %2',
-            alwaysShowNavOnTouchDevices: true,
-            positionFromTop: 50
+        // Custom Modal Lightbox
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImg');
+        const modalCaption = document.getElementById('modalCaption');
+        const modalCounter = document.getElementById('modalCounter');
+        const modalClose = document.getElementById('modalClose');
+        const modalPrev = document.getElementById('modalPrev');
+        const modalNext = document.getElementById('modalNext');
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        let currentIndex = 0;
+
+        function openModal(index) {
+            currentIndex = index;
+            const item = galleryItems[index];
+            modalImg.src = item.dataset.src;
+            modalCaption.textContent = item.dataset.caption || '';
+            modalCounter.textContent = (index + 1) + ' / ' + galleryItems.length;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function navigate(direction) {
+            currentIndex += direction;
+            if (currentIndex < 0) currentIndex = galleryItems.length - 1;
+            if (currentIndex >= galleryItems.length) currentIndex = 0;
+            openModal(currentIndex);
+        }
+
+        galleryItems.forEach(function(item, index) {
+            item.addEventListener('click', function() {
+                openModal(index);
+            });
         });
 
-        // Fechar lightbox com ESC ou clique fora
+        modalClose.addEventListener('click', closeModal);
+        modalPrev.addEventListener('click', function() { navigate(-1); });
+        modalNext.addEventListener('click', function() { navigate(1); });
+
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) closeModal();
+        });
+
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && document.querySelector('.lb-overlay')) {
-                lightbox.close();
-            }
+            if (!modal.classList.contains('active')) return;
+            if (e.key === 'Escape') closeModal();
+            if (e.key === 'ArrowLeft') navigate(-1);
+            if (e.key === 'ArrowRight') navigate(1);
         });
 
         // Theme Toggle
