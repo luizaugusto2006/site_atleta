@@ -1310,7 +1310,9 @@
                     <div class="gallery-img-wrapper">
                         <img src="{{ foto.imagem.url }}" alt="{{ foto.legenda|default:'Foto do atleta' }}">
                     </div>
-                    <div class="gallery-caption">{{ foto.legenda|default:"Foto" }} {{ forloop.counter }}</div>
+                    {% if foto.legenda %}
+                    <div class="gallery-caption">{{ foto.legenda }}</div>
+                    {% endif %}
                 </div>
                 {% endfor %}
             </div>
