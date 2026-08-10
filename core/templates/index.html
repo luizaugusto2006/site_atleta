@@ -699,25 +699,27 @@
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 15px;
+            gap: 20px;
         }
 
         .gallery-item {
-            position: relative;
             border-radius: 12px;
             overflow: hidden;
-            aspect-ratio: 4/3;
             border: 2px solid rgba(201, 168, 76, 0.1);
             transition: all 0.3s ease;
-            display: block;
-            text-decoration: none;
             cursor: pointer;
+            background: var(--dark-card);
         }
 
         .gallery-item:hover {
             border-color: var(--accent);
-            transform: scale(1.03);
+            transform: translateY(-5px);
             box-shadow: 0 8px 25px rgba(201, 168, 76, 0.3);
+        }
+
+        .gallery-img-wrapper {
+            overflow: hidden;
+            aspect-ratio: 4/3;
         }
 
         .gallery-item img {
@@ -732,18 +734,12 @@
         }
 
         .gallery-caption {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(180deg, transparent, rgba(15, 10, 6, 0.95));
-            color: #fff;
+            padding: 12px 10px;
+            color: var(--text-light);
             font-size: 0.8rem;
             font-weight: 600;
             text-align: center;
-            padding: 25px 10px 12px;
             line-height: 1.3;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.8);
         }
 
         /* Custom Modal Lightbox */
@@ -1311,9 +1307,11 @@
             <div class="gallery-grid" id="galleryGrid">
                 {% for foto in atleta.fotos.all %}
                 <div class="gallery-item" data-src="{{ foto.imagem.url }}" data-caption="{{ foto.legenda|default:'' }}">
-                    <img src="{{ foto.imagem.url }}" alt="{{ foto.legenda|default:'Foto do atleta' }}">
+                    <div class="gallery-img-wrapper">
+                        <img src="{{ foto.imagem.url }}" alt="{{ foto.legenda|default:'Foto do atleta' }}">
+                    </div>
                     {% if foto.legenda %}
-                    <span class="gallery-caption">{{ foto.legenda }}</span>
+                    <div class="gallery-caption">{{ foto.legenda }}</div>
                     {% endif %}
                 </div>
                 {% endfor %}
