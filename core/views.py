@@ -12,6 +12,7 @@ def home(request):
         'atleta': atleta,
         'estatistica': estatistica,
         'estatisticas': estatisticas,
+        'video_url': '/media/videos/luizinho-destaques.mp4',
     })
 
 def media_serve(request, path):
