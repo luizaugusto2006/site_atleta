@@ -735,12 +735,28 @@
             opacity: 0;
             transition: opacity 0.3s;
             display: flex;
-            align-items: flex-end;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
             padding: 15px;
+            gap: 8px;
         }
 
         .gallery-item:hover .gallery-overlay {
             opacity: 1;
+        }
+
+        .gallery-overlay i {
+            color: var(--accent);
+            font-size: 1.2rem;
+        }
+
+        .gallery-caption {
+            color: #fff;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-align: center;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
         }
 
         .gallery-overlay i {
@@ -1235,7 +1251,12 @@
                 {% for foto in atleta.fotos.all %}
                 <a href="{{ foto.imagem.url }}" class="gallery-item" data-lightbox="galeria" data-title="{{ foto.legenda|default:'' }}" data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:1 }}00">
                     <img src="{{ foto.imagem.url }}" alt="{{ foto.legenda|default:'Foto do atleta' }}">
-                    <div class="gallery-overlay"><i class="fas fa-expand"></i></div>
+                    <div class="gallery-overlay">
+                        <i class="fas fa-expand"></i>
+                        {% if foto.legenda %}
+                        <span class="gallery-caption">{{ foto.legenda }}</span>
+                        {% endif %}
+                    </div>
                 </a>
                 {% endfor %}
             </div>
